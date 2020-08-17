@@ -11,5 +11,14 @@
 
             };
         }
+
+        public static Product AxeDeodrant()
+        {
+            return new Product()
+            {
+                Name = "Axe Deodrant",
+                Price = 99.99
+            };
+        }
     }
 }

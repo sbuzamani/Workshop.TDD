@@ -1,32 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Workshop.TDD
 {
     public class Cart
     {
-        public List<IProduct> Items { get; set; }
+        public List<CartItem> Items { get; set; }
         public Cart()
         {
-            Items = new List<IProduct>();
+            Items = new List<CartItem>();
         }
 
-        public void AddItems(IProduct products, int numberOfItems)
+        public void AddItems(Product product, int numberOfItems)
         {
-            for (int i = 0; i < numberOfItems; i++)
+            var cartItem = new CartItem
             {
-                Items.Add(products);
-            }
+                Product  = product,
+                Quantity = numberOfItems
+            };
+                Items.Add(cartItem);
         }
 
-        public double CalculateTotal()
+        public double CalculateTotalBeforeVat()
         {
             var total = 0.00;
             foreach (var item in Items)
             {
-                total += item.Price;
+                total += (item.Product.Price * item.Quantity);
             }
-            return Math.Round(total,2);
+            return Math.Round(total, 2);
+        }
+
+        public double CalculateVat(double total)
+        {
+            return Math.Round(total * 0.125, 1);
+        }
+
+        public double CalculateTotalAfterVat()
+        {
+            var total = CalculateTotalBeforeVat();
+            var totalAfterVat = total + CalculateVat(total);
+            return Math.Round(totalAfterVat,2);
+        }
+
+        public string  DisplayCartItems()
+        {
+            var cartItems = string.Empty;
+
+            foreach (var item in Items)
+            {
+                cartItems += $"{item.Product.Name} - {item.Product.Price} Qty: {item.Quantity}";
+            }
+            return cartItems;
         }
     }
 }
