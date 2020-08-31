@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Runtime.InteropServices;
 using Workshop.TDD.ObjectMothers;
 using Xunit;
 
@@ -22,6 +20,7 @@ namespace Workshop.TDD
 
             //Act
             cart.AddItems(products, numberOfItems);
+            
             var cartTotal = cart.CalculateTotalBeforeVat();
 
             //Assert
@@ -39,8 +38,8 @@ namespace Workshop.TDD
             cart.AddItems(products, numberOfItems);
 
             //Assert
-            Assert.Single(cart.Items);
-            Assert.Equal(5, cart.Items.FirstOrDefault().Quantity);
+            //Assert.Single(cart.CartItems);
+            Assert.Equal(5, cart.ProductsCount);
         }
         [Fact]
         public void CalculateVAT_OneItemAddedToCart_VATAmountIsCorrectPercentage()

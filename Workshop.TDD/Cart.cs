@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Workshop.TDD
 {
     public class Cart
     {
-        public List<CartItem> Items { get; set; }
+        private List<CartItem> Items { get; set; }
+        public int ProductsCount { get; set; }
+
         public Cart()
         {
             Items = new List<CartItem>();
@@ -16,10 +17,12 @@ namespace Workshop.TDD
         {
             var cartItem = new CartItem
             {
-                Product  = product,
+                ProductName  = product.Name,
+                ProductPrice = product.Price,
                 Quantity = numberOfItems
             };
-                Items.Add(cartItem);
+            Items.Add(cartItem);
+            ProductsCount += cartItem.Quantity;
         }
 
         public double CalculateTotalBeforeVat()
@@ -27,9 +30,10 @@ namespace Workshop.TDD
             var total = 0.00;
             foreach (var item in Items)
             {
-                total += (item.Product.Price * item.Quantity);
+                total += (item.ProductPrice * item.Quantity);
+                total = Math.Round(total, 2);
             }
-            return Math.Round(total, 2);
+            return total;
         }
 
         public double CalculateVat(double total)
@@ -50,7 +54,7 @@ namespace Workshop.TDD
 
             foreach (var item in Items)
             {
-                cartItems += $"{item.Product.Name} - {item.Product.Price} Qty: {item.Quantity}";
+                cartItems += $"{item.ProductName} - {item.ProductPrice} Qty: {item.Quantity}";
             }
             return cartItems;
         }
