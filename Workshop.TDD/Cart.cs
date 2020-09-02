@@ -8,6 +8,8 @@ namespace Workshop.TDD
         private List<CartItem> Items { get; set; }
         public int ProductsCount { get; set; }
 
+        private const double VatPercentage = 0.125;
+
         public Cart()
         {
             Items = new List<CartItem>();
@@ -38,7 +40,7 @@ namespace Workshop.TDD
 
         public double CalculateVat(double total)
         {
-            return Math.Round(total * 0.125, 1);
+            return Math.Round(total * VatPercentage, 1);
         }
 
         public double CalculateTotalAfterVat()
